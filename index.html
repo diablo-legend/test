@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Каталог услуг и товаров</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#8E6FF7", secondary: "" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f9fb;
+      }
+      .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(142, 111, 247, 0.15);
+      }
+      .chip {
+      transition: all 0.2s ease;
+      }
+      .chip:hover {
+      background-color: rgba(142, 111, 247, 0.1);
+      }
+      .chip.active {
+      background-color: #8E6FF7;
+      color: white;
+      }
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+      }
+      .view-toggle button {
+      transition: color 0.2s ease;
+      }
+      .view-toggle button.active {
+      color: #8E6FF7;
+      }
+      .modal {
+      transition: opacity 0.3s ease;
+      }
+      .modal-content {
+      transition: transform 0.3s ease;
+      }
+      .modal.open {
+      opacity: 1;
+      pointer-events: auto;
+      }
+      .modal.open .modal-content {
+      transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+      <!-- Фильтры и переключатели вида -->
+      <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4"
+      >
+        <div class="flex flex-wrap gap-2">
+          <button
+            class="chip active px-4 py-2 rounded-full text-sm font-medium border border-primary !rounded-button whitespace-nowrap"
+          >
+            Все услуги
+          </button>
+          <button
+            class="chip px-4 py-2 rounded-full text-sm font-medium border border-primary !rounded-button whitespace-nowrap"
+          >
+            Веб-разработка
+          </button>
+          <button
+            class="chip px-4 py-2 rounded-full text-sm font-medium border border-primary !rounded-button whitespace-nowrap"
+          >
+            Дизайн
+          </button>
+          <button
+            class="chip px-4 py-2 rounded-full text-sm font-medium border border-primary !rounded-button whitespace-nowrap"
+          >
+            Маркетинг
+          </button>
+          <button
+            class="chip px-4 py-2 rounded-full text-sm font-medium border border-primary !rounded-button whitespace-nowrap"
+          >
+            SEO
+          </button>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="relative">
+            <input
+              type="text"
+              placeholder="Поиск услуг"
+              class="pl-10 pr-4 py-2 rounded border border-gray-200 focus:outline-none focus:border-primary w-full md:w-64 text-sm"
+            />
+            <div
+              class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400"
+            >
+              <i class="ri-search-line"></i>
+            </div>
+          </div>
+          <div
+            class="view-toggle flex border border-gray-200 rounded overflow-hidden"
+          >
+            <button
+              class="active p-2 w-10 h-10 flex items-center justify-center !rounded-button whitespace-nowrap"
+            >
+              <div class="w-6 h-6 flex items-center justify-center">
+                <i class="ri-grid-fill"></i>
+              </div>
+            </button>
+            <button
+              class="p-2 w-10 h-10 flex items-center justify-center !rounded-button whitespace-nowrap"
+            >
+              <div class="w-6 h-6 flex items-center justify-center">
+                <i class="ri-list-check-2"></i>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Сетка карточек услуг -->
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      >
+        <!-- Карточка 1 -->
+        <div
+          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
+        >
+          <div class="p-6 flex flex-col h-full">
+            <div
+              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
+            >
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-code-s-slash-line ri-xl"></i>
+              </div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">
+              Разработка веб-сайта
+            </h3>
+            <p class="text-gray-500 text-sm flex-grow mb-4">
+              Создание современных адаптивных веб-сайтов с уникальным дизайном
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="text-primary font-semibold">от 45 000 ₽</span>
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Карточка 2 -->
+        <div
+          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
+        >
+          <div class="p-6 flex flex-col h-full">
+            <div
+              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
+            >
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-palette-line ri-xl"></i>
+              </div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">UI/UX Дизайн</h3>
+            <p class="text-gray-500 text-sm flex-grow mb-4">
+              Разработка пользовательских интерфейсов и проектирование опыта
+              взаимодействия
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="text-primary font-semibold">от 35 000 ₽</span>
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Карточка 3 -->
+        <div
+          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
+        >
+          <div class="p-6 flex flex-col h-full">
+            <div
+              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
+            >
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-shopping-cart-2-line ri-xl"></i>
+              </div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">
+              Интернет-магазин
+            </h3>
+            <p class="text-gray-500 text-sm flex-grow mb-4">
+              Создание полнофункциональных онлайн-магазинов с интеграцией
+              платежных систем
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="text-primary font-semibold">от 75 000 ₽</span>
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Карточка 4 -->
+        <div
+          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
+        >
+          <div class="p-6 flex flex-col h-full">
+            <div
+              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
+            >
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-search-line ri-xl"></i>
+              </div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">
+              SEO-оптимизация
+            </h3>
+            <p class="text-gray-500 text-sm flex-grow mb-4">
+              Комплексное продвижение сайта в поисковых системах
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="text-primary font-semibold">от 25 000 ₽</span>
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Карточка 5 -->
+        <div
+          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
+        >
+          <div class="p-6 flex flex-col h-full">
+            <div
+              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
+            >
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-smartphone-line ri-xl"></i>
+              </div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">
+              Мобильное приложение
+            </h3>
+            <p class="text-gray-500 text-sm flex-grow mb-4">
+              Разработка нативных и кроссплатформенных мобильных приложений
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="text-primary font-semibold">от 120 000 ₽</span>
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Карточка 6 -->
+        <div
+          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
+        >
+          <div class="p-6 flex flex-col h-full">
+            <div
+              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
+            >
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-advertisement-line ri-xl"></i>
+              </div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">
+              Контекстная реклама
+            </h3>
+            <p class="text-gray-500 text-sm flex-grow mb-4">
+              Настройка и ведение рекламных кампаний в Яндекс.Директ и Google
+              Ads
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="text-primary font-semibold">от 15 000 ₽</span>
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Карточка 7 -->
+        <div
+          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
+        >
+          <div class="p-6 flex flex-col h-full">
+            <div
+              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
+            >
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-file-word-line ri-xl"></i>
+              </div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">Копирайтинг</h3>
+            <p class="text-gray-500 text-sm flex-grow mb-4">
+              Создание продающих текстов и контент-маркетинг
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="text-primary font-semibold">от 5 000 ₽</span>
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Карточка 8 -->
+        <div
+          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
+        >
+          <div class="p-6 flex flex-col h-full">
+            <div
+              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
+            >
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-server-line ri-xl"></i>
+              </div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">
+              Хостинг и домен
+            </h3>
+            <p class="text-gray-500 text-sm flex-grow mb-4">
+              Размещение сайта на быстрых серверах и регистрация доменных имен
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="text-primary font-semibold">от 3 000 ₽</span>
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Карточка 9 -->
+        <div
+          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
+        >
+          <div class="p-6 flex flex-col h-full">
+            <div
+              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
+            >
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-braces-line ri-xl"></i>
+              </div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">
+              Доработка сайта
+            </h3>
+            <p class="text-gray-500 text-sm flex-grow mb-4">
+              Внесение изменений и улучшений в существующий сайт
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="text-primary font-semibold">от 10 000 ₽</span>
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Карточка 10 -->
+        <div
+          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
+        >
+          <div class="p-6 flex flex-col h-full">
+            <div
+              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
+            >
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-line-chart-line ri-xl"></i>
+              </div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">
+              Аналитика и отчеты
+            </h3>
+            <p class="text-gray-500 text-sm flex-grow mb-4">
+              Настройка систем аналитики и подготовка отчетов по эффективности
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="text-primary font-semibold">от 8 000 ₽</span>
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Карточка 11 -->
+        <div
+          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
+        >
+          <div class="p-6 flex flex-col h-full relative">
+            <div
+              class="absolute top-0 right-0 bg-primary bg-opacity-10 text-primary px-3 py-1 m-4 rounded text-sm font-medium"
+            >
+              Скидка 20%
+            </div>
+            <div
+              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
+            >
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-chat-1-line ri-xl"></i>
+              </div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">Чат-бот</h3>
+            <p class="text-gray-500 text-sm flex-grow mb-4">
+              Разработка и внедрение чат-ботов для сайта и мессенджеров
+            </p>
+            <div class="flex justify-between items-center">
+              <div class="flex flex-col">
+                <span class="text-gray-400 text-sm line-through"
+                  >от 30 000 ₽</span
+                >
+                <span class="text-primary font-semibold">от 24 000 ₽</span>
+              </div>
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Карточка 12 -->
+        <div
+          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
+        >
+          <div class="p-6 flex flex-col h-full relative">
+            <div
+              class="absolute top-0 right-0 bg-gray-100 text-gray-600 px-3 py-1 m-4 rounded text-sm"
+            >
+              Нет в наличии
+            </div>
+            <div
+              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
+            >
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-shield-check-line ri-xl"></i>
+              </div>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">
+              Защита от взлома
+            </h3>
+            <p class="text-gray-500 text-sm flex-grow mb-4">
+              Комплексная защита сайта от хакерских атак и вредоносного ПО
+            </p>
+            <div class="flex justify-between items-center">
+              <span class="text-primary font-semibold">от 12 000 ₽</span>
+              <div
+                class="w-8 h-8 flex items-center justify-center text-primary"
+              >
+                <i class="ri-arrow-right-line"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Модальное окно с деталями услуги -->
+    <div
+      id="serviceModal"
+      class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 pointer-events-none"
+    >
+      <div
+        class="modal-content bg-white rounded-lg w-full max-w-2xl transform translate-y-8 p-0 overflow-hidden"
+      >
+        <div class="p-6 bg-primary bg-opacity-5">
+          <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center"
+              >
+                <div
+                  class="w-6 h-6 flex items-center justify-center text-primary"
+                >
+                  <i id="modalIcon" class="ri-code-s-slash-line"></i>
+                </div>
+              </div>
+              <h3 id="modalTitle" class="text-xl font-semibold text-gray-900">
+                Разработка веб-сайта
+              </h3>
+            </div>
+            <button
+              id="closeModal"
+              class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700"
+            >
+              <i class="ri-close-line ri-lg"></i>
+            </button>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="mb-6">
+            <h4 class="text-lg font-medium text-gray-900 mb-2">
+              Описание услуги
+            </h4>
+            <p id="modalDescription" class="text-gray-600">
+              Создание современных адаптивных веб-сайтов с уникальным дизайном.
+              Наша команда профессионалов разработает для вас сайт, который
+              будет отлично выглядеть на всех устройствах и привлекать новых
+              клиентов.
+            </p>
+          </div>
+          <div class="mb-6">
+            <h4 class="text-lg font-medium text-gray-900 mb-2">Что включено</h4>
+            <ul class="space-y-2 text-gray-600">
+              <li class="flex items-start">
+                <div
+                  class="w-5 h-5 flex items-center justify-center text-primary mt-0.5 mr-2"
+                >
+                  <i class="ri-check-line"></i>
+                </div>
+                <span>Разработка уникального дизайна</span>
+              </li>
+              <li class="flex items-start">
+                <div
+                  class="w-5 h-5 flex items-center justify-center text-primary mt-0.5 mr-2"
+                >
+                  <i class="ri-check-line"></i>
+                </div>
+                <span>Адаптивная верстка для всех устройств</span>
+              </li>
+              <li class="flex items-start">
+                <div
+                  class="w-5 h-5 flex items-center justify-center text-primary mt-0.5 mr-2"
+                >
+                  <i class="ri-check-line"></i>
+                </div>
+                <span>Интеграция CMS для управления контентом</span>
+              </li>
+              <li class="flex items-start">
+                <div
+                  class="w-5 h-5 flex items-center justify-center text-primary mt-0.5 mr-2"
+                >
+                  <i class="ri-check-line"></i>
+                </div>
+                <span>Базовая SEO-оптимизация</span>
+              </li>
+              <li class="flex items-start">
+                <div
+                  class="w-5 h-5 flex items-center justify-center text-primary mt-0.5 mr-2"
+                >
+                  <i class="ri-check-line"></i>
+                </div>
+                <span>Техническая поддержка в течение 1 месяца</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mb-6">
+            <h4 class="text-lg font-medium text-gray-900 mb-2">
+              Сроки и стоимость
+            </h4>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <div class="flex-1 p-4 bg-gray-50 rounded">
+                <div class="text-sm text-gray-500 mb-1">Стоимость</div>
+                <div id="modalPrice" class="text-xl font-semibold text-primary">
+                  от 45 000 ₽
+                </div>
+              </div>
+              <div class="flex-1 p-4 bg-gray-50 rounded">
+                <div class="text-sm text-gray-500 mb-1">Сроки выполнения</div>
+                <div class="text-xl font-semibold text-gray-900">
+                  от 14 дней
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-end gap-4">
+            <button
+              class="px-6 py-3 bg-gray-100 text-gray-700 rounded !rounded-button whitespace-nowrap"
+            >
+              Подробнее
+            </button>
+            <button
+              class="px-6 py-3 bg-primary text-white rounded !rounded-button whitespace-nowrap"
+            >
+              Заказать услугу
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Переключение вида отображения
+        const viewToggleButtons = document.querySelectorAll(".view-toggle button");
+        viewToggleButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            viewToggleButtons.forEach((btn) => btn.classList.remove("active"));
+            this.classList.add("active");
+          });
+        });
+        // Переключение фильтров
+        const chipButtons = document.querySelectorAll(".chip");
+        chipButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            chipButtons.forEach((btn) => btn.classList.remove("active"));
+            this.classList.add("active");
+          });
+        });
+        // Открытие модального окна при клике на карточку
+        const cards = document.querySelectorAll(".card");
+        const modal = document.getElementById("serviceModal");
+        const closeModal = document.getElementById("closeModal");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalDescription = document.getElementById("modalDescription");
+        const modalPrice = document.getElementById("modalPrice");
+        const modalIcon = document.getElementById("modalIcon");
+        cards.forEach((card) => {
+          card.addEventListener("click", function () {
+            // Получаем данные из карточки
+            const title = this.querySelector("h3").textContent;
+            const description = this.querySelector("p").textContent;
+            const price = this.querySelector(".text-primary").textContent;
+            const iconClass = this.querySelector("i").className;
+            // Заполняем модальное окно
+            modalTitle.textContent = title;
+            modalDescription.textContent = description;
+            modalPrice.textContent = price;
+            modalIcon.className = iconClass;
+            // Открываем модальное окно
+            modal.classList.add("open");
+            document.body.style.overflow = "hidden";
+          });
+        });
+        // Закрытие модального окна
+        closeModal.addEventListener("click", function () {
+          modal.classList.remove("open");
+          document.body.style.overflow = "";
+        });
+        // Закрытие модального окна при клике вне его содержимого
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal) {
+            modal.classList.remove("open");
+            document.body.style.overflow = "";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -4,710 +4,2082 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Каталог услуг и товаров</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: { primary: "#8E6FF7", secondary: "" },
-            borderRadius: {
-              none: "0px",
-              sm: "4px",
-              DEFAULT: "8px",
-              md: "12px",
-              lg: "16px",
-              xl: "20px",
-              "2xl": "24px",
-              "3xl": "32px",
-              full: "9999px",
-              button: "8px",
-            },
-          },
-        },
-      };
-    </script>
-    <style>
-      :where([class^="ri-"])::before { content: "\f3c2"; }
-      body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f9f9fb;
-      }
-      .card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-      .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(142, 111, 247, 0.15);
-      }
-      .chip {
-      transition: all 0.2s ease;
-      }
-      .chip:hover {
-      background-color: rgba(142, 111, 247, 0.1);
-      }
-      .chip.active {
-      background-color: #8E6FF7;
-      color: white;
-      }
-      input[type="number"]::-webkit-inner-spin-button,
-      input[type="number"]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-      }
-      .view-toggle button {
-      transition: color 0.2s ease;
-      }
-      .view-toggle button.active {
-      color: #8E6FF7;
-      }
-      .modal {
-      transition: opacity 0.3s ease;
-      }
-      .modal-content {
-      transition: transform 0.3s ease;
-      }
-      .modal.open {
-      opacity: 1;
-      pointer-events: auto;
-      }
-      .modal.open .modal-content {
-      transform: translateY(0);
-      }
-    </style>
   </head>
   <body>
-    <div class="container mx-auto px-4 py-8 max-w-7xl">
-      <!-- Фильтры и переключатели вида -->
-      <div
-        class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4"
-      >
-        <div class="flex flex-wrap gap-2">
-          <button
-            class="chip active px-4 py-2 rounded-full text-sm font-medium border border-primary !rounded-button whitespace-nowrap"
-          >
-            Все услуги
-          </button>
-          <button
-            class="chip px-4 py-2 rounded-full text-sm font-medium border border-primary !rounded-button whitespace-nowrap"
-          >
-            Веб-разработка
-          </button>
-          <button
-            class="chip px-4 py-2 rounded-full text-sm font-medium border border-primary !rounded-button whitespace-nowrap"
-          >
-            Дизайн
-          </button>
-          <button
-            class="chip px-4 py-2 rounded-full text-sm font-medium border border-primary !rounded-button whitespace-nowrap"
-          >
-            Маркетинг
-          </button>
-          <button
-            class="chip px-4 py-2 rounded-full text-sm font-medium border border-primary !rounded-button whitespace-nowrap"
-          >
-            SEO
-          </button>
-        </div>
-        <div class="flex items-center gap-4">
-          <div class="relative">
-            <input
-              type="text"
-              placeholder="Поиск услуг"
-              class="pl-10 pr-4 py-2 rounded border border-gray-200 focus:outline-none focus:border-primary w-full md:w-64 text-sm"
-            />
-            <div
-              class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 flex items-center justify-center text-gray-400"
-            >
-              <i class="ri-search-line"></i>
-            </div>
-          </div>
-          <div
-            class="view-toggle flex border border-gray-200 rounded overflow-hidden"
-          >
-            <button
-              class="active p-2 w-10 h-10 flex items-center justify-center !rounded-button whitespace-nowrap"
-            >
-              <div class="w-6 h-6 flex items-center justify-center">
-                <i class="ri-grid-fill"></i>
-              </div>
-            </button>
-            <button
-              class="p-2 w-10 h-10 flex items-center justify-center !rounded-button whitespace-nowrap"
-            >
-              <div class="w-6 h-6 flex items-center justify-center">
-                <i class="ri-list-check-2"></i>
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
-      <!-- Сетка карточек услуг -->
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-      >
-        <!-- Карточка 1 -->
-        <div
-          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        >
-          <div class="p-6 flex flex-col h-full">
-            <div
-              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
-            >
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-code-s-slash-line ri-xl"></i>
-              </div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">
-              Разработка веб-сайта
-            </h3>
-            <p class="text-gray-500 text-sm flex-grow mb-4">
-              Создание современных адаптивных веб-сайтов с уникальным дизайном
-            </p>
-            <div class="flex justify-between items-center">
-              <span class="text-primary font-semibold">от 45 000 ₽</span>
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-arrow-right-line"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Карточка 2 -->
-        <div
-          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        >
-          <div class="p-6 flex flex-col h-full">
-            <div
-              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
-            >
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-palette-line ri-xl"></i>
-              </div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">UI/UX Дизайн</h3>
-            <p class="text-gray-500 text-sm flex-grow mb-4">
-              Разработка пользовательских интерфейсов и проектирование опыта
-              взаимодействия
-            </p>
-            <div class="flex justify-between items-center">
-              <span class="text-primary font-semibold">от 35 000 ₽</span>
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-arrow-right-line"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Карточка 3 -->
-        <div
-          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        >
-          <div class="p-6 flex flex-col h-full">
-            <div
-              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
-            >
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-shopping-cart-2-line ri-xl"></i>
-              </div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">
-              Интернет-магазин
-            </h3>
-            <p class="text-gray-500 text-sm flex-grow mb-4">
-              Создание полнофункциональных онлайн-магазинов с интеграцией
-              платежных систем
-            </p>
-            <div class="flex justify-between items-center">
-              <span class="text-primary font-semibold">от 75 000 ₽</span>
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-arrow-right-line"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Карточка 4 -->
-        <div
-          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        >
-          <div class="p-6 flex flex-col h-full">
-            <div
-              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
-            >
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-search-line ri-xl"></i>
-              </div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">
-              SEO-оптимизация
-            </h3>
-            <p class="text-gray-500 text-sm flex-grow mb-4">
-              Комплексное продвижение сайта в поисковых системах
-            </p>
-            <div class="flex justify-between items-center">
-              <span class="text-primary font-semibold">от 25 000 ₽</span>
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-arrow-right-line"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Карточка 5 -->
-        <div
-          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        >
-          <div class="p-6 flex flex-col h-full">
-            <div
-              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
-            >
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-smartphone-line ri-xl"></i>
-              </div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">
-              Мобильное приложение
-            </h3>
-            <p class="text-gray-500 text-sm flex-grow mb-4">
-              Разработка нативных и кроссплатформенных мобильных приложений
-            </p>
-            <div class="flex justify-between items-center">
-              <span class="text-primary font-semibold">от 120 000 ₽</span>
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-arrow-right-line"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Карточка 6 -->
-        <div
-          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        >
-          <div class="p-6 flex flex-col h-full">
-            <div
-              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
-            >
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-advertisement-line ri-xl"></i>
-              </div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">
-              Контекстная реклама
-            </h3>
-            <p class="text-gray-500 text-sm flex-grow mb-4">
-              Настройка и ведение рекламных кампаний в Яндекс.Директ и Google
-              Ads
-            </p>
-            <div class="flex justify-between items-center">
-              <span class="text-primary font-semibold">от 15 000 ₽</span>
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-arrow-right-line"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Карточка 7 -->
-        <div
-          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        >
-          <div class="p-6 flex flex-col h-full">
-            <div
-              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
-            >
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-file-word-line ri-xl"></i>
-              </div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">Копирайтинг</h3>
-            <p class="text-gray-500 text-sm flex-grow mb-4">
-              Создание продающих текстов и контент-маркетинг
-            </p>
-            <div class="flex justify-between items-center">
-              <span class="text-primary font-semibold">от 5 000 ₽</span>
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-arrow-right-line"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Карточка 8 -->
-        <div
-          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        >
-          <div class="p-6 flex flex-col h-full">
-            <div
-              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
-            >
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-server-line ri-xl"></i>
-              </div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">
-              Хостинг и домен
-            </h3>
-            <p class="text-gray-500 text-sm flex-grow mb-4">
-              Размещение сайта на быстрых серверах и регистрация доменных имен
-            </p>
-            <div class="flex justify-between items-center">
-              <span class="text-primary font-semibold">от 3 000 ₽</span>
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-arrow-right-line"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Карточка 9 -->
-        <div
-          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        >
-          <div class="p-6 flex flex-col h-full">
-            <div
-              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
-            >
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-braces-line ri-xl"></i>
-              </div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">
-              Доработка сайта
-            </h3>
-            <p class="text-gray-500 text-sm flex-grow mb-4">
-              Внесение изменений и улучшений в существующий сайт
-            </p>
-            <div class="flex justify-between items-center">
-              <span class="text-primary font-semibold">от 10 000 ₽</span>
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-arrow-right-line"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Карточка 10 -->
-        <div
-          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        >
-          <div class="p-6 flex flex-col h-full">
-            <div
-              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
-            >
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-line-chart-line ri-xl"></i>
-              </div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">
-              Аналитика и отчеты
-            </h3>
-            <p class="text-gray-500 text-sm flex-grow mb-4">
-              Настройка систем аналитики и подготовка отчетов по эффективности
-            </p>
-            <div class="flex justify-between items-center">
-              <span class="text-primary font-semibold">от 8 000 ₽</span>
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-arrow-right-line"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Карточка 11 -->
-        <div
-          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        >
-          <div class="p-6 flex flex-col h-full relative">
-            <div
-              class="absolute top-0 right-0 bg-primary bg-opacity-10 text-primary px-3 py-1 m-4 rounded text-sm font-medium"
-            >
-              Скидка 20%
-            </div>
-            <div
-              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
-            >
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-chat-1-line ri-xl"></i>
-              </div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">Чат-бот</h3>
-            <p class="text-gray-500 text-sm flex-grow mb-4">
-              Разработка и внедрение чат-ботов для сайта и мессенджеров
-            </p>
-            <div class="flex justify-between items-center">
-              <div class="flex flex-col">
-                <span class="text-gray-400 text-sm line-through"
-                  >от 30 000 ₽</span
-                >
-                <span class="text-primary font-semibold">от 24 000 ₽</span>
-              </div>
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-arrow-right-line"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Карточка 12 -->
-        <div
-          class="card bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer"
-        >
-          <div class="p-6 flex flex-col h-full relative">
-            <div
-              class="absolute top-0 right-0 bg-gray-100 text-gray-600 px-3 py-1 m-4 rounded text-sm"
-            >
-              Нет в наличии
-            </div>
-            <div
-              class="w-16 h-16 rounded-full bg-primary bg-opacity-10 flex items-center justify-center mb-6"
-            >
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-shield-check-line ri-xl"></i>
-              </div>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">
-              Защита от взлома
-            </h3>
-            <p class="text-gray-500 text-sm flex-grow mb-4">
-              Комплексная защита сайта от хакерских атак и вредоносного ПО
-            </p>
-            <div class="flex justify-between items-center">
-              <span class="text-primary font-semibold">от 12 000 ₽</span>
-              <div
-                class="w-8 h-8 flex items-center justify-center text-primary"
-              >
-                <i class="ri-arrow-right-line"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Модальное окно с деталями услуги -->
-    <div
-      id="serviceModal"
-      class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 opacity-0 pointer-events-none"
-    >
-      <div
-        class="modal-content bg-white rounded-lg w-full max-w-2xl transform translate-y-8 p-0 overflow-hidden"
-      >
-        <div class="p-6 bg-primary bg-opacity-5">
-          <div class="flex justify-between items-center mb-4">
-            <div class="flex items-center gap-4">
-              <div
-                class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center"
-              >
-                <div
-                  class="w-6 h-6 flex items-center justify-center text-primary"
-                >
-                  <i id="modalIcon" class="ri-code-s-slash-line"></i>
-                </div>
-              </div>
-              <h3 id="modalTitle" class="text-xl font-semibold text-gray-900">
-                Разработка веб-сайта
-              </h3>
-            </div>
-            <button
-              id="closeModal"
-              class="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-gray-700"
-            >
-              <i class="ri-close-line ri-lg"></i>
-            </button>
-          </div>
-        </div>
-        <div class="p-6">
-          <div class="mb-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-2">
-              Описание услуги
-            </h4>
-            <p id="modalDescription" class="text-gray-600">
-              Создание современных адаптивных веб-сайтов с уникальным дизайном.
-              Наша команда профессионалов разработает для вас сайт, который
-              будет отлично выглядеть на всех устройствах и привлекать новых
-              клиентов.
-            </p>
-          </div>
-          <div class="mb-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-2">Что включено</h4>
-            <ul class="space-y-2 text-gray-600">
-              <li class="flex items-start">
-                <div
-                  class="w-5 h-5 flex items-center justify-center text-primary mt-0.5 mr-2"
-                >
-                  <i class="ri-check-line"></i>
-                </div>
-                <span>Разработка уникального дизайна</span>
-              </li>
-              <li class="flex items-start">
-                <div
-                  class="w-5 h-5 flex items-center justify-center text-primary mt-0.5 mr-2"
-                >
-                  <i class="ri-check-line"></i>
-                </div>
-                <span>Адаптивная верстка для всех устройств</span>
-              </li>
-              <li class="flex items-start">
-                <div
-                  class="w-5 h-5 flex items-center justify-center text-primary mt-0.5 mr-2"
-                >
-                  <i class="ri-check-line"></i>
-                </div>
-                <span>Интеграция CMS для управления контентом</span>
-              </li>
-              <li class="flex items-start">
-                <div
-                  class="w-5 h-5 flex items-center justify-center text-primary mt-0.5 mr-2"
-                >
-                  <i class="ri-check-line"></i>
-                </div>
-                <span>Базовая SEO-оптимизация</span>
-              </li>
-              <li class="flex items-start">
-                <div
-                  class="w-5 h-5 flex items-center justify-center text-primary mt-0.5 mr-2"
-                >
-                  <i class="ri-check-line"></i>
-                </div>
-                <span>Техническая поддержка в течение 1 месяца</span>
-              </li>
-            </ul>
-          </div>
-          <div class="mb-6">
-            <h4 class="text-lg font-medium text-gray-900 mb-2">
-              Сроки и стоимость
-            </h4>
-            <div class="flex flex-col sm:flex-row gap-4">
-              <div class="flex-1 p-4 bg-gray-50 rounded">
-                <div class="text-sm text-gray-500 mb-1">Стоимость</div>
-                <div id="modalPrice" class="text-xl font-semibold text-primary">
-                  от 45 000 ₽
-                </div>
-              </div>
-              <div class="flex-1 p-4 bg-gray-50 rounded">
-                <div class="text-sm text-gray-500 mb-1">Сроки выполнения</div>
-                <div class="text-xl font-semibold text-gray-900">
-                  от 14 дней
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="flex justify-end gap-4">
-            <button
-              class="px-6 py-3 bg-gray-100 text-gray-700 rounded !rounded-button whitespace-nowrap"
-            >
-              Подробнее
-            </button>
-            <button
-              class="px-6 py-3 bg-primary text-white rounded !rounded-button whitespace-nowrap"
-            >
-              Заказать услугу
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Переключение вида отображения
-        const viewToggleButtons = document.querySelectorAll(".view-toggle button");
-        viewToggleButtons.forEach((button) => {
-          button.addEventListener("click", function () {
-            viewToggleButtons.forEach((btn) => btn.classList.remove("active"));
-            this.classList.add("active");
-          });
-        });
-        // Переключение фильтров
-        const chipButtons = document.querySelectorAll(".chip");
-        chipButtons.forEach((button) => {
-          button.addEventListener("click", function () {
-            chipButtons.forEach((btn) => btn.classList.remove("active"));
-            this.classList.add("active");
-          });
-        });
-        // Открытие модального окна при клике на карточку
-        const cards = document.querySelectorAll(".card");
-        const modal = document.getElementById("serviceModal");
-        const closeModal = document.getElementById("closeModal");
-        const modalTitle = document.getElementById("modalTitle");
-        const modalDescription = document.getElementById("modalDescription");
-        const modalPrice = document.getElementById("modalPrice");
-        const modalIcon = document.getElementById("modalIcon");
-        cards.forEach((card) => {
-          card.addEventListener("click", function () {
-            // Получаем данные из карточки
-            const title = this.querySelector("h3").textContent;
-            const description = this.querySelector("p").textContent;
-            const price = this.querySelector(".text-primary").textContent;
-            const iconClass = this.querySelector("i").className;
-            // Заполняем модальное окно
-            modalTitle.textContent = title;
-            modalDescription.textContent = description;
-            modalPrice.textContent = price;
-            modalIcon.className = iconClass;
-            // Открываем модальное окно
-            modal.classList.add("open");
-            document.body.style.overflow = "hidden";
-          });
-        });
-        // Закрытие модального окна
-        closeModal.addEventListener("click", function () {
-          modal.classList.remove("open");
-          document.body.style.overflow = "";
-        });
-        // Закрытие модального окна при клике вне его содержимого
-        modal.addEventListener("click", function (e) {
-          if (e.target === modal) {
-            modal.classList.remove("open");
-            document.body.style.overflow = "";
-          }
-        });
-      });
-    </script>
+<p>/*
+ Theme Name:   storefront-child
+ Theme URI:    https://begarit-studio.ru/
+ Description:  Дочерняя тема для магазина услуг студии Begarit
+ Author:       by Alexander Nikitin
+ Template:     storefront
+ Version:      1.0.0
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Unbounded:200,300,regular,500,600,700,800,900);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,regular,500,600,700,800,300italic,italic,500italic,600italic,700italic,800italic);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+/* Скрываем скроллбар для всех браузеров */
+/* Для Chrome, Safari и Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Для Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* Для IE и Edge */
+* {
+  -ms-overflow-style: none;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+
+  /* фон и типографика */
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.6;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/* ——— Контейнер для основного контента ——— */
+.main-content {
+  flex: 1;               /* занимает всё доступное пространство */
+  width: 100%;
+  max-width: 1600px;     /* ограничение ширины */
+  margin: 5% auto 0;     /* 5% сверху, по центру */
+  padding: 20px;         /* внутренние отступы */
+  box-sizing: border-box;
+  margin: 0 auto;  
+}
+
+
+
+
+/* ------------------------- NAV ------------------------- */
+
+/* Шапка */
+.header {
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.nav {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0.1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 70px;
+}
+
+/* Логотип */
+.logo a {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.logo-img {
+  width: 44px;
+  height: 44px;
+}
+
+.logo-text {
+  font-size: 32px;
+  font-family: "Unbounded", sans-serif;
+  font-weight: bold;
+  margin: 0;
+}
+
+
+
+/* Десктопное меню */
+.desktop-menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.menu-link {
+  color: #000;
+  text-decoration: none;
+  font-size: 1.125rem;
+  font-weight: 550;
+  transition: color 0.3s ease;
+}
+
+.menu-link:hover {
+  color: #6366f1;
+}
+
+/* Бургер кнопка */
+.burger-btn {
+  position: relative;
+  display: none;
+  width: 24px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2001;
+}
+
+.burger-btn span {
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  background-color: #000;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.burger-btn span:nth-child(1) {
+  top: 0;
+}
+
+.burger-btn span:nth-child(2) {
+  top: 8px;
+}
+
+.burger-btn span:nth-child(3) {
+  top: 16px;
+}
+
+/* Мобильное меню */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  visibility: hidden;
+  z-index: 2000;
+}
+
+.mobile-menu.active {
+  visibility: visible;
+}
+
+.mobile-menu-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100vh;
+  background: #fff;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 16px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-menu.active .mobile-menu-container {
+  transform: translateX(0);
+}
+
+/* Мобильная навигация */
+.mobile-nav {
+  padding: 7rem 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+.mobile-menu-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #000;
+  text-decoration: none;
+  font-size: 1.125rem;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-link:hover {
+  background-color: #f3f4f6;
+  transform: translateX(4px);
+}
+
+.menu-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Футер мобильного меню */
+.mobile-menu-footer {
+  margin-top: auto;
+  padding: 1.5rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+  text-align: center;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Медиа-запросы */
+@media (max-width: 1280px) {
+  .desktop-menu {
+    display: none;
+  }
+
+  .burger-btn {
+    display: block;
+  }
+
+  .burger-btn span {
+    width: 24px;
+    height: 2px;
+  }
+}
+
+/* Адаптация для маленьких устройств */
+@media (max-width: 480px) {
+  .mobile-menu-container {
+    width: 100%;
+  }
+
+  .mobile-nav {
+    padding: 6rem 1.5rem 1.5rem;
+  }
+
+  .mobile-menu-link {
+    font-size: 1rem;
+  }
+
+  .logo-text {
+    font-size: 1.5rem;
+  }
+
+  .logo {
+    gap: 1rem;
+  }
+
+  .logo-img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nav {
+    padding: 1rem;
+  }
+}
+
+/* Анимация бургера */
+.burger-btn.active span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.burger-btn.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-btn.active span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+#app {
+  padding: 2rem;
+}
+
+.desktop-menu a {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+
+/* Размер иконки */
+.menu-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  transition: color 0.3s ease;   /* чтобы перекраска была плавной */
+}
+
+
+/* Убираем браузерный outline и теневую обводку на всех ссылках и кнопках */
+a:focus, a:active,
+button:focus, button:active,
+input:focus, textarea:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Если где‑то остаётся «фиолетовое» свечение от Storefront */
+:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Убираем highlight на мобильных (Tap) */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ------------------------- MAIN ------------------------- */
+
+/* ------------------------- FOOTER ------------------------- */
+/* Футер */
+.footer {
+  background-color: #000;
+  color: #fff;
+  padding: 80px 0 40px;
+  
+
+  /* ↓ вот эти три строчки добавляем вместо width:100%; ↓ */
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+
+  /* остальная логика остаётся без изменений */
+  clear: both;
+ 
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+
+.footer-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+  align-items: start;
+  padding-bottom: 17px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap ;
+  padding-top: 40px;
+}
+
+.footer-info {
+  max-width: 100%;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.footer-logo-img {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.footer-logo-text {
+  font-family: "Unbounded", sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.footer-description {
+  font-family: "Open Sans", sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 16px;
+  max-width: 640px;
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
+  max-width: 572px;
+}
+
+.footer-column h3 {
+  font-family: "Unbounded", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 32px;
+  color: #fff;
+}
+
+.footer-column a {
+  font-size: 15px;
+  margin-bottom: 20px;
+color: #fff;
+}
+
+
+.footer-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Open Sans", sans-serif;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 12px;
+  transition: color 0.3s ease;
+  color: #fff;
+}
+
+.footer-link:hover {
+  color: #fff;
+}
+
+.footer-link svg {
+  flex-shrink: 0;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 16px;
+    color: #fff;
+}
+
+.footer-bottom a {
+  font-size: 13px;
+    color: #fff;
+}
+
+.footer-legal {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  flex-wrap: wrap;
+}
+
+.footer-legal a {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.footer-legal a:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-credits {
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  white-space: nowrap;
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+  .footer-content {
+      gap: 80px;
+  }
+  
+  .footer-info {
+      max-width: 480px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .footer {
+      padding: 80px 0 40px;
+  }
+  
+  .footer-content {
+      grid-template-columns: 1fr;
+      gap: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-links {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+  }
+  
+  .footer-bottom {
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+  }
+  
+  .footer-legal {
+      flex-direction: column;
+      justify-content: left;
+      gap: 8px;
+      
+  }
+
+  .footer-credits {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .footer-legal {
+    align-items: start;
+    width: 100%;
+  }
+  
+  }
+  
+}
+
+@media (max-width: 480px) {
+  .footer {
+      padding: 60px 0 30px;
+  }
+  
+  .footer-links {
+      grid-template-columns: 1fr;
+      gap: 30px;
+  }
+  
+  .footer-logo-text {
+      font-size: 24px;
+  }
+  
+  .footer-description {
+      font-size: 14px;
+  }
+
+  .footer-legal {
+    font-size: 12px;
+}
+
+  .footer-credits {
+    font-size: 12px;
+}
+  
+}
+
+
+@media (max-width: 370px) {
+ 
+  #app {
+    padding: 24px;
+  }
+
+    
+  .footer-legal {
+    font-size: 11px;
+}
+
+  .footer-credits {
+    font-size: 11px;
+}
+
+  .footer-link {
+    font-size: 14px;
+  }
+
+  .footer-column h3 {
+    font-size: 16px;
+  }
+
+  .footer-description {
+    font-size: 14px;
+  }
+  
+}
+
+
+
+@media (max-width: 330px) {
+   
+  .footer-legal {
+    font-size: 9px;
+}
+
+  .footer-credits {
+    font-size: 9px;
+}
+
+  
+}
+
+
+/* Убираем любые элементы, которые могут вылезать за пределы */
+html {
+  overflow-x: hidden;
+}
+
+
+/* Центрируем контент WooCommerce в Storefront */
+
+/* 1) Сбросим возможные боковые отступы у body */
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/* 2) Убедимся, что родительский .site-content не растягивается */
+.site-content {
+  width: 100%;
+  display: flex;            /* превращаем в flex‑контейнер */
+  justify-content: center;  /* центрируем всех детей по горизонтали */
+}
+
+/* 3) Ограничиваем собственно блок #primary.content-area */
+#primary.content-area {
+  width: 100%;          /* не растягиваем более родителя */
+  max-width: 1600px;    /* ваша желаемая макс. ширина */
+  margin: 5% auto 0;    /* 5% сверху, по центру, 0 снизу */
+  padding: 0 32px;      /* внутренние отступы, если нужны */
+  box-sizing: border-box;
+  flex: 0 1 auto;       /* чтобы flex‑контейнер не растягивал этот блок */
+}
+
+
+.footer {
+  min-height: 522px;
+}
+
+/* ---------- Сетка карточек ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  padding: 0 0px 50px;
+  padding-top: 50px;
+}
+
+@media (max-width: 1200px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- Карточка товара ---------- */
+.card {
+  background: #fff;
+  border: 0.1px solid rgba(142, 111, 247, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  padding: 25px 25px 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+}
+
+/* hover‑эффект */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(142, 111, 247, 0.15);
+}
+
+/* Иконка в кружочке */
+.card-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 9999px;
+  background-color: rgba(142, 111, 247, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.card-icon-img {
+  max-width: 48px;
+  max-height: 48px;
+}
+
+/* Заголовок */
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 9px;
+}
+
+/* Краткое описание */
+.card-excerpt {
+  color: #6b7280;
+  font-size: 14px;
+  flex-grow: 1;
+  margin-bottom: 1rem;
+}
+
+/* Футер карточки */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #8E6FF7;
+  font-weight: 600;
+}
+
+.card-price {
+ 
+}
+
+.card-arrow-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Дополнительно: убираем outline */
+.card:focus, .card:active {
+  outline: none;
+  box-shadow: none;
+}
+
+
+
+
+
+
+ /* Основные стили фильтров */
+        .filters {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .chip-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .chip {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #8E6FF7;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background-color: transparent;
+            color: #8E6FF7;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .chip:hover {
+            background-color: rgba(142, 111, 247, 0.1);
+        }
+
+        .chip.chip--active {
+            background-color: #8E6FF7;
+            color: #fff;
+        }
+
+        /* Мобильное меню */
+        .mobile-filter-toggle {
+            display: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #8E6FF7;
+            background-color: transparent;
+            color: #8E6FF7;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            position: relative;
+        }
+        
+ /* 1) Убедимся, что span — flex-контейнер */
+.mobile-filter-toggle span {
+  display: flex;
+  align-items: center;
+  /* Распределяем элементы по краям */
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* 2) Иконка уезжает вправо */
+.mobile-filter-toggle span img {
+  /* «Толкает» иконку к правому краю */
+  margin-left: auto;
+  /* При необходимости задаём её собственные размеры */
+  width: 16px;
+  height: 16px;
+}
+
+        .mobile-filter-toggle:hover {
+            background-color: rgba(142, 111, 247, 0.1);
+        }
+
+        .mobile-filter-toggle::after {
+            content: "⋯";
+            font-size: 1.2rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .mobile-filter-toggle #activeFilterText {
+            flex: 1;
+            text-align: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .mobile-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(142, 111, 247, 0.15);
+            z-index: 1000;
+            margin-top: 0.5rem;
+            padding: 1rem;
+            animation: dropdownSlide 0.3s ease-out;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        @keyframes dropdownSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mobile-dropdown.show {
+            display: block;
+        }
+
+        .mobile-dropdown .chip-group {
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .mobile-dropdown .chip {
+            width: 100%;
+            text-align: center;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid #8E6FF7;
+        }
+
+        .mobile-dropdown .chip:hover {
+            background-color: rgba(142, 111, 247, 0.1);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(142, 111, 247, 0.2);
+        }
+
+        .mobile-dropdown .chip.chip--active {
+            background-color: #8E6FF7;
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(142, 111, 247, 0.3);
+        }
+
+        /* Overlay для закрытия меню */
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+
+        .mobile-overlay.show {
+            display: block;
+        }
+
+        /* Адаптив */
+        @media (max-width: 900px) {
+            .chip {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .filters > .chip-group {
+                display: none !important;
+            }
+            
+            .mobile-filter-toggle {
+                display: flex !important;
+                width: 100%;
+                justify-content: space-between;
+                align-items: center;
+                min-height: 44px;
+                box-sizing: border-box;
+            }
+            
+            .filters {
+                position: relative;
+            }
+
+            .mobile-dropdown {
+                left: 0;
+                right: 0;
+                width: 100%;
+                box-sizing: border-box;
+                max-height: 70vh;
+                overflow-y: auto;
+            }
+
+            .mobile-dropdown .chip-group {
+                display: flex !important;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .mobile-dropdown .chip {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-sizing: border-box;
+            }
+        }
+
+        /* Очень маленькие экраны */
+        @media (max-width: 480px) {
+
+
+            .mobile-filter-toggle {
+                font-size: 0.8rem;
+                padding: 0.6rem 0.8rem;
+            }
+
+            .mobile-dropdown {
+                padding: 0.75rem;
+                border-radius: 8px;
+                margin-top: 0.25rem;
+            }
+
+            .mobile-dropdown .chip {
+                font-size: 0.85rem;
+                padding: 0.6rem 0.8rem;
+                border-radius: 8px;
+            }
+
+            .mobile-dropdown .chip-group {
+                gap: 0.5rem;
+            }
+        }
+
+        /* Экстремально маленькие экраны */
+        @media (max-width: 320px) {
+
+
+            .mobile-filter-toggle {
+                font-size: 0.75rem;
+                padding: 0.5rem 0.6rem;
+                min-height: 40px;
+            }
+
+            .mobile-dropdown {
+                padding: 0.5rem;
+                border-radius: 6px;
+            }
+
+            .mobile-dropdown .chip {
+                font-size: 0.8rem;
+                padding: 0.5rem 0.6rem;
+                border-radius: 6px;
+                min-height: 40px;
+            }
+
+            .mobile-dropdown .chip-group {
+                gap: 0.4rem;
+            }
+        }
+
+        /* Минимальные экраны (120-150px) */
+        @media (max-width: 150px) {
+            body {
+                font-size: 12px;
+            }
+
+            .mobile-filter-toggle {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.5rem;
+                min-height: 36px;
+                gap: 0.25rem;
+            }
+
+            .mobile-filter-toggle::after {
+                font-size: 1rem;
+            }
+
+            .mobile-dropdown {
+                padding: 0.4rem;
+                border-radius: 4px;
+                margin-top: 0.2rem;
+            }
+
+            .mobile-dropdown .chip {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.5rem;
+                border-radius: 4px;
+                min-height: 36px;
+            }
+
+            .mobile-dropdown .chip-group {
+                gap: 0.3rem;
+            }
+
+            #activeFilterText {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: calc(100% - 25px);
+            }
+        }
+        
+        
+        
+       /* ========== ИСПРАВЛЕННЫЕ СТИЛИ ДЛЯ КАРТОЧЕК ТОВАРОВ ========== */
+
+/* Базовые стили для карточки */
+.card {
+    position: relative;
+    overflow: visible;
+}
+
+/* Контейнер для всех бейджей — переносим в правый верхний угол */
+.card-badges {
+    position: absolute !important;
+    top: 25px !important;
+    right: 25px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Общие стили для бейджей */
+.card-badge {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    padding: 6px 10px;
+    border-radius: 12px;
+    color: #fff;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Бейдж скидки */
+.card-badge--discount {
+    background: linear-gradient(135deg, #ff4757, #ff3742);
+    font-family: "Unbounded", sans-serif;
+    letter-spacing: 0.5px;
+}
+
+/* Бейдж "Нет в наличии" */
+.card-badge--out-of-stock {
+    background: linear-gradient(135deg, #636e72, #2d3436);
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Контейнер цены */
+.card-price-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    flex-grow: 1;
+}
+
+.card-price-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    width: 100%;
+}
+
+/* Стили цен */
+.card-price {
+    color: #8E6FF7;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+.card-price--regular {
+    color: #9ca3af !important;
+    font-size: 12px !important;
+    text-decoration: line-through;
+    font-weight: 400 !important;
+    order: -1;
+}
+
+.card-price--sale {
+    color: #8E6FF7 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
+
+/* Состояния карточки */
+.card--out-of-stock {
+    opacity: 0.65;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.card--out-of-stock .card-icon,
+.card--out-of-stock .card-title,
+.card--out-of-stock .card-excerpt {
+    filter: grayscale(0.3);
+}
+
+.card--out-of-stock:hover {
+    transform: none !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Плейсхолдер для изображения */
+.card-icon-img--placeholder {
+    width: 48px;
+    height: 48px;
+    background: #f3f4f6;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-icon-img--placeholder::before {
+    content: "📦";
+    font-size: 24px;
+    opacity: 0.5;
+}
+
+/* Адаптивность бейджей */
+@media (max-width: 768px) {
+    .card-badges {
+        top: 2.5%;
+        right: 2.5%;
+    }
+    .card-badge {
+        font-size: 12px;
+        padding: 5px 8px;
+        border-radius: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-badges {
+        top: 2%;
+        right: 2%;
+    }
+    .card-badge {
+        font-size: 11px;
+        padding: 4px 7px;
+        border-radius: 8px;
+    }
+}
+
+@media (max-width: 320px) {
+    .card-badge {
+        font-size: 9px;
+        padding: 3px 6px;
+        border-radius: 6px;
+    }
+}
+
+/* Анимации бейджей */
+@media (prefers-reduced-motion: no-preference) {
+    .card-badge {
+        transition: transform 0.2s ease;
+    }
+    .card:hover .card-badge--discount {
+        transform: scale(1.05);
+    }
+    .card:hover .card-badge--out-of-stock {
+        transform: scale(1.05);
+    }
+}
+
+/* Accessibility */
+.card[aria-disabled="true"] {
+    cursor: not-allowed;
+}
+.card[aria-disabled="true"]:focus {
+    outline: 2px solid #9ca3af;
+    outline-offset: 2px;
+}
+
+/* Фиксы для совместимости с темой Storefront */
+.woocommerce .card-price ins,
+.woocommerce .card-price del {
+    text-decoration: none;
+    background: none;
+    font-weight: inherit;
+    color: inherit;
+}
+.woocommerce .card-price del {
+    opacity: 0.7;
+}
+
+
+
+.onsale {
+    display: none;
+}
+
+
+.input-text {
+    border-radius: 12px;
+}
+
+/* Селектор для поля «Количество» на странице товара */
+.single-product .quantity input.input-text.qty {
+  background-color: #fff;  /* ваш новый цвет фона */
+   border: 1px solid #000; 
+   color: #000; 
+}
+
+
+/* Стилизация поля количества товара */
+.qty {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 16px;
+    text-align: center;
+    background: #ffffff;
+    transition: border-color 0.3s ease;
+    min-width: 80px;
+    height: 45px;
+}
+
+.qty:focus {
+    outline: none;
+    border-color: #007cba;
+    box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.1);
+}
+
+.qty:hover {
+    border-color: #cccccc;
+}
+
+//* Стилизация поля количества товара */
+.qty {
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 16px;
+    text-align: center;
+    background: #ffffff;
+    transition: border-color 0.3s ease;
+    min-width: 80px;
+    height: 45px;
+}
+
+.qty:focus {
+    outline: none;
+    border-color: #007cba;
+    box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.1);
+}
+
+.qty:hover {
+    border-color: #cccccc;
+}
+
+/* Стилизация стрелочек в Webkit браузерах (Chrome, Safari, Edge) */
+.qty::-webkit-outer-spin-button,
+.qty::-webkit-inner-spin-button {
+    margin: 0;
+    background: none !important;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    opacity: 1 !important;
+    color: #000 !important;
+}
+
+/* Убираем все hover эффекты */
+.qty::-webkit-outer-spin-button:hover,
+.qty::-webkit-inner-spin-button:hover {
+    background: none !important;
+    opacity: 1 !important;
+}
+
+/*Страница*/
+
+.single_add_to_cart_button  {
+    border-radius: 12px;
+}
+
+/*Галлерея*/
+.woo-variation-gallery-thumbnail-slider  {
+    padding-top: 15px;
+}
+
+.woo-variation-gallery-thumbnail-slider {
+    border-radius: 120px !important;
+}
+
+
+
+/*-----------------------------*/
+
+/* ========================================
+   БАЗОВЫЕ ПЕРЕМЕННЫЕ И СБРОС
+======================================== */
+:root {
+  --accent-color: #6E62FF;
+  --text-color: #000000;
+  --bg-color: #FFFFFF;
+  --border-color: #000000;
+  --border-radius-large: 8px;
+  --border-radius-small: 6px;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --nav-width: 280px;
+}
+
+/* Базовый сброс для корректного box-sizing */
+.woocommerce-account *,
+.woocommerce-account *::before,
+.woocommerce-account *::after {
+  box-sizing: border-box !important;
+}
+
+/* ========================================
+   ОСНОВНЫЕ КОНТЕЙНЕРЫ MY ACCOUNT
+======================================== */
+
+/* Основной контейнер страницы */
+.woocommerce-account .woocommerce {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: var(--spacing-lg) var(--spacing-md) !important;
+  background: var(--bg-color) !important;
+  min-height: 60vh !important;
+}
+
+/* Сброс стандартных стилей WooCommerce */
+.woocommerce-account .woocommerce-MyAccount-navigation,
+.woocommerce-account .woocommerce-MyAccount-content {
+  background: var(--bg-color) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--border-radius-large) !important;
+  padding: var(--spacing-lg) !important;
+  margin: 0 !important;
+  box-shadow: none !important;
+  float: none !important;
+  width: auto !important;
+}
+
+/* ========================================
+   LAYOUT СИСТЕМА ДЛЯ ДЕСКТОПА
+======================================== */
+
+/* Desktop layout - используем flexbox вместо grid для лучшей совместимости */
+@media (min-width: 769px) {
+  .woocommerce-account .woocommerce {
+    display: flex !important;
+    gap: var(--spacing-lg) !important;
+    align-items: flex-start !important;
+  }
+  
+  .woocommerce-MyAccount-navigation {
+    flex: 0 0 var(--nav-width) !important;
+    width: var(--nav-width) !important;
+    min-width: var(--nav-width) !important;
+    max-width: var(--nav-width) !important;
+  }
+  
+  .woocommerce-MyAccount-content {
+    flex: 1 !important;
+    width: calc(100% - var(--nav-width) - var(--spacing-lg)) !important;
+    min-width: 0 !important;
+  }
+}
+
+/* ========================================
+   НАВИГАЦИОННОЕ МЕНЮ MY ACCOUNT
+======================================== */
+
+/* Сброс стандартных стилей навигации */
+.woocommerce-MyAccount-navigation {
+  margin-bottom: var(--spacing-lg) !important;
+}
+
+.woocommerce-MyAccount-navigation ul {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--spacing-sm) !important;
+}
+
+.woocommerce-MyAccount-navigation li {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+/* Стили ссылок навигации */
+.woocommerce-MyAccount-navigation a {
+  display: block !important;
+  padding: var(--spacing-md) var(--spacing-lg) !important;
+  text-decoration: none !important;
+  color: var(--text-color) !important;
+  background: var(--bg-color) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--border-radius-small) !important;
+  transition: all 0.3s ease !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  text-align: left !important;
+  width: 100% !important;
+  font-size: 1rem !important;
+}
+
+/* Активная ссылка и hover эффекты */
+.woocommerce-MyAccount-navigation a:hover,
+.woocommerce-MyAccount-navigation a:focus,
+.woocommerce-MyAccount-navigation .is-active a {
+  background: var(--accent-color) !important;
+  color: var(--bg-color) !important;
+  border-color: var(--accent-color) !important;
+  outline: none !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ========================================
+   КОНТЕНТНАЯ ОБЛАСТЬ
+======================================== */
+
+.woocommerce-MyAccount-content {
+  margin-bottom: 0 !important;
+}
+
+/* Заголовки в контентной области */
+.woocommerce-MyAccount-content h2,
+.woocommerce-MyAccount-content h3 {
+  margin-top: 0 !important;
+  margin-bottom: var(--spacing-lg) !important;
+  color: var(--text-color) !important;
+  font-weight: 600 !important;
+}
+
+/* ========================================
+   КНОПКИ И ФОРМЫ
+======================================== */
+
+/* Базовые стили всех кнопок */
+.woocommerce-account .woocommerce button,
+.woocommerce-account .woocommerce .button,
+.woocommerce-account .woocommerce input[type="submit"],
+.woocommerce-account .woocommerce input[type="button"],
+.woocommerce-account .woocommerce .wc-forward {
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--border-radius-small) !important;
+  padding: var(--spacing-md) var(--spacing-lg) !important;
+  line-height: 1.4 !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  margin: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) 0 !important;
+  box-shadow: none !important;
+  text-transform: none !important;
+  font-size: 1rem !important;
+  min-height: 2.5em !important;
+  vertical-align: middle !important;
+}
+
+/* Hover и focus эффекты */
+.woocommerce-account .woocommerce button:hover,
+.woocommerce-account .woocommerce .button:hover,
+.woocommerce-account .woocommerce input[type="submit"]:hover,
+.woocommerce-account .woocommerce input[type="button"]:hover,
+.woocommerce-account .woocommerce .wc-forward:hover,
+.woocommerce-account .woocommerce button:focus,
+.woocommerce-account .woocommerce .button:focus,
+.woocommerce-account .woocommerce input[type="submit"]:focus,
+.woocommerce-account .woocommerce input[type="button"]:focus,
+.woocommerce-account .woocommerce .wc-forward:focus {
+  background: var(--accent-color) !important;
+  color: var(--bg-color) !important;
+  border-color: var(--accent-color) !important;
+  outline: none !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Поля форм */
+.woocommerce-account .woocommerce input[type="text"],
+.woocommerce-account .woocommerce input[type="email"],
+.woocommerce-account .woocommerce input[type="password"],
+.woocommerce-account .woocommerce input[type="tel"],
+.woocommerce-account .woocommerce select,
+.woocommerce-account .woocommerce textarea {
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--border-radius-small) !important;
+  padding: var(--spacing-md) !important;
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin-bottom: var(--spacing-md) !important;
+  transition: border-color 0.3s ease !important;
+}
+
+/* Focus состояние полей */
+.woocommerce-account .woocommerce input[type="text"]:focus,
+.woocommerce-account .woocommerce input[type="email"]:focus,
+.woocommerce-account .woocommerce input[type="password"]:focus,
+.woocommerce-account .woocommerce input[type="tel"]:focus,
+.woocommerce-account .woocommerce select:focus,
+.woocommerce-account .woocommerce textarea:focus {
+  border-color: var(--accent-color) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(110, 98, 255, 0.2) !important;
+}
+
+/* ========================================
+   ТАБЛИЦЫ И СПИСКИ
+======================================== */
+
+/* Таблицы заказов и другие */
+.woocommerce-account .woocommerce table {
+  width: 100% !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--border-radius-large) !important;
+  overflow: hidden !important;
+  margin-bottom: var(--spacing-lg) !important;
+  background: var(--bg-color) !important;
+}
+
+.woocommerce-account .woocommerce table th,
+.woocommerce-account .woocommerce table td {
+  padding: var(--spacing-md) !important;
+  text-align: left !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  border-right: 1px solid var(--border-color) !important;
+  vertical-align: middle !important;
+}
+
+.woocommerce-account .woocommerce table th {
+  background: transparent !important;
+  font-weight: 600 !important;
+  color: var(--text-color) !important;
+}
+
+.woocommerce-account .woocommerce table th:last-child,
+.woocommerce-account .wooCommerce table td:last-child {
+  border-right: none !important;
+}
+
+.woocommerce-account .woocommerce table tr:last-child th,
+.woocommerce-account .woocommerce table tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* Адреса и информационные блоки */
+.woocommerce-account .woocommerce .woocommerce-Address,
+.woocommerce-account .woocommerce .woocommerce-customer-details,
+.woocommerce-account .woocommerce .woocommerce-order-details,
+.woocommerce-account .woocommerce .woocommerce-order-downloads {
+  background: var(--bg-color) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--border-radius-large) !important;
+  padding: var(--spacing-lg) !important;
+  margin-bottom: var(--spacing-lg) !important;
+}
+
+/* ========================================
+   МОБИЛЬНАЯ АДАПТАЦИЯ
+======================================== */
+
+/* Планшеты и мобильные устройства */
+@media (max-width: 768px) {
+  .woocommerce-account .woocommerce {
+    display: block !important;
+    padding: var(--spacing-md) var(--spacing-sm) !important;
+  }
+  
+  .woocommerce-MyAccount-navigation,
+  .woocommerce-MyAccount-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: var(--spacing-lg) !important;
+    padding: var(--spacing-md) !important;
+  }
+  
+  /* Горизонтальная навигация на планшетах */
+  .woocommerce-MyAccount-navigation ul {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+    gap: var(--spacing-sm) !important;
+  }
+  
+  .woocommerce-MyAccount-navigation a {
+    padding: var(--spacing-md) var(--spacing-sm) !important;
+    text-align: center !important;
+    font-size: 0.9rem !important;
+  }
+  
+  /* Адаптация таблиц */
+  .woocommerce-account .woocommerce table {
+    font-size: 0.9rem !important;
+  }
+  
+  .woocommerce-account .woocommerce table th,
+  .woocommerce-account .woocommerce table td {
+    padding: var(--spacing-sm) !important;
+  }
+}
+
+/* Мобильные устройства */
+@media (max-width: 480px) {
+  .woocommerce-account .woocommerce {
+    padding: var(--spacing-sm) !important;
+  }
+  
+  .woocommerce-MyAccount-navigation,
+  .woocommerce-MyAccount-content {
+    padding: var(--spacing-md) var(--spacing-sm) !important;
+  }
+  
+  /* Вертикальная навигация на мобильных */
+  .woocommerce-MyAccount-navigation ul {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--spacing-xs) !important;
+  }
+  
+  .woocommerce-MyAccount-navigation a {
+    padding: var(--spacing-sm) var(--spacing-md) !important;
+    font-size: 0.9rem !important;
+    text-align: left !important;
+  }
+  
+  /* Кнопки на всю ширину */
+  .woocommerce-account .woocommerce button,
+  .woocommerce-account .woocommerce .button,
+  .woocommerce-account .woocommerce input[type="submit"],
+  .woocommerce-account .woocommerce .wc-forward {
+    width: 100% !important;
+    margin: var(--spacing-xs) 0 !important;
+    text-align: center !important;
+  }
+  
+  /* Адаптация таблиц для мобильных */
+  .woocommerce-account .woocommerce table {
+    font-size: 0.8rem !important;
+    display: block !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+}
+
+/* ========================================
+   УВЕДОМЛЕНИЯ И СООБЩЕНИЯ
+======================================== */
+
+.woocommerce-account .woocommerce .woocommerce-message,
+.woocommerce-account .woocommerce .woocommerce-error,
+.woocommerce-account .woocommerce .woocommerce-info {
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--border-radius-large) !important;
+  padding: var(--spacing-md) var(--spacing-lg) !important;
+  margin-bottom: var(--spacing-lg) !important;
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+.woocommerce-account .woocommerce .woocommerce-message {
+  border-left: 4px solid #4CAF50 !important;
+}
+
+.woocommerce-account .woocommerce .woocommerce-error {
+  border-left: 4px solid #F44336 !important;
+}
+
+.woocommerce-account .woocommerce .woocommerce-info {
+  border-left: 4px solid var(--accent-color) !important;
+}
+
+/* ========================================
+   ДОСТУПНОСТЬ И UX УЛУЧШЕНИЯ
+======================================== */
+
+/* Улучшенные focus стили */
+.woocommerce-account .woocommerce a:focus,
+.woocommerce-account .woocommerce button:focus,
+.woocommerce-account .woocommerce input:focus,
+.woocommerce-account .woocommerce select:focus,
+.woocommerce-account .woocommerce textarea:focus {
+  outline: 2px solid var(--accent-color) !important;
+  outline-offset: 2px !important;
+}
+
+/* Скрытие ненужных элементов */
+.woocommerce-account .woocommerce .woocommerce-breadcrumb {
+  display: none !important;
+}
+
+/* ========================================
+   СПЕЦИФИЧНЫЕ ИСПРАВЛЕНИЯ STOREFRONT
+======================================== */
+
+/* Отключение float для старых версий Storefront */
+.woocommerce-account .woocommerce-MyAccount-navigation,
+.woocommerce-account .woocommerce-MyAccount-content {
+  float: none !important;
+  clear: both !important;
+}
+
+/* Сброс ширины, заданной в Storefront */
+@media (min-width: 768px) {
+  .woocommerce-account .woocommerce-MyAccount-navigation {
+    width: var(--nav-width) !important;
+  }
+  
+  .woocommerce-account .woocommerce-MyAccount-content {
+    width: auto !important;
+    margin-left: 0 !important;
+  }
+}
+
+/* Переопределение стилей заголовков Storefront */
+.woocommerce-account .woocommerce h1,
+.woocommerce-account .woocommerce h2,
+.woocommerce-account .woocommerce h3 {
+  color: var(--text-color) !important;
+  font-family: inherit !important;
+}
+
+/* ========================================
+   ФИНАЛЬНЫЕ ОПТИМИЗАЦИИ
+======================================== */
+
+/* Убираем стандартные отступы WooCommerce */
+.woocommerce-account .woocommerce .col2-set,
+.woocommerce-account .woocommerce .col-1,
+.woocommerce-account .woocommerce .col-2 {
+  float: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+/* Оптимизация для производительности */
+.woocommerce-account .woocommerce * {
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
+}
+
+/* Обеспечение правильного отображения изображений */
+.woocommerce-account .woocommerce img {
+  height: auto !important;
+  max-width: 100% !important;
+  border-radius: var(--border-radius-small) !important;
+}
+
+/* Последний сброс возможных конфликтов */
+.woocommerce-account .woocommerce::before,
+.woocommerce-account .woocommerce::after,
+.woocommerce-account .woocommerce-MyAccount-navigation::before,
+.woocommerce-account .woocommerce-MyAccount-navigation::after,
+.woocommerce-account .woocommerce-MyAccount-content::before,
+.woocommerce-account .woocommerce-MyAccount-content::after {
+  display: none !important;
+}
+
+/* Обеспечение корректной работы на старых браузерах */
+.woocommerce-account .woocommerce {
+  display: block;
+}
+
+@supports (display: flex) {
+  @media (min-width: 769px) {
+    .woocommerce-account .woocommerce {
+      display: flex !important;
+    }
+  }
+}
+
+
+.woocommerce-account .woocommerce .woocommerce-info:before,
+.woocommerce-account .woocommerce .woocommerce-error:before {
+  position: static !important;
+  display: inline-block !important;
+  margin-right: var(--spacing-sm) !important;
+  color: var(--text-color) !important;
+}
+
+/* ========== 2. Мобильный отступ между навигацией и контентом ========== */
+@media (max-width: 768px) {
+  .woocommerce-account .woocommerce-MyAccount-navigation {
+    margin-bottom: var(--spacing-xl) !important;
+  }
+  .woocommerce-account .woocommerce-MyAccount-content {
+    margin-top: var(--spacing-md) !important;
+  }
+}
+
+/* ========== 3. Белый фон для fieldset ========== */
+.woocommerce-account .woocommerce fieldset {
+  background: var(--bg-color) !important;
+}
+/* Конкретно для WP Telegram Login */
+.woocommerce-account .wp-telegram-login fieldset {
+  background: var(--bg-color) !important;
+}
+
+.woocommerce-account .woocommerce fieldset legend {
+  background: var(--bg-color) !important;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  color: var(--text-color) !important;
+}
+/* ============================================================================================================== */
+
+
+/* 1) Спрятать все кнопки «глаз» */
+.password-input > button.show-password-input {
+  display: none !important;
+}
+
+/* 2) Вернуть обычный отступ у полей */
+.password-input > input[type="password"],
+.password-input > input[type="text"] {
+  padding-right: 1rem !important;
+}
+
+.woocommerce form.woocommerce-form-login.login{
+    border: 1px solid #000;
+    padding: 24px;
+  
+    
+    display: flex;
+    align-items: center;
+
+    flex-direction: column;
+    border-radius: 12px;
+      margin-left: 50%;
+  margin-right: 50%;
+  margin: auto;
+  margin-top: -10px;
+}
+}
+
+.woocommerce-account .woocommerce-form-login::before {
+    content: 'Вход';
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.woocommerce-account .woocommerce-notices-wrapper {
+    display: none !important;
+}
+
+
+.woocommerce form.woocommerce-form-login .woocommerce-Input.password-input {
+     max-width: 1037px;
+    width: 100%;
+}
+
+.woocommerce .col2-set {
+ display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.woocommerce-button.button.woocommerce-form-login__submit {
+    max-width: 310px;
+    width: 100%;
+    padding: 0;
+}
+
+.form-row {
+     max-width: 310px;
+    width: 100%;
+}
+
+.woocommerce form.woocommerce-form-login .woocommerce-Input.woocommerce-Input--text {
+    width: 100%;
+}
+
+.page-template-default.woocommerce-account .entry-content > .woocommerce > h2 {
+    display: none !important;
+}
+
+
+/* Форма регистрации */
+
+/* Стили только для страницы регистрации */
+/* Замените .registration-page на актуальный класс вашей страницы регистрации */
+
+/* 1. Перенос поля "Фамилия" на верх формы */
+.registration-page .woocommerce-form-register {
+    display: flex;
+    flex-direction: column;
+}
+
+.registration-page .woocommerce-form-register .form-row:has(input[name*="last_name"]),
+.registration-page .woocommerce-form-register .form-row:has(input[id*="last_name"]),
+.registration-page .woocommerce-form-register .form-row:has(label[for*="last_name"]) {
+    order: -1; /* Перемещает поле фамилии в начало */
+}
+
+/* Альтернативный способ для переноса поля фамилии, если первый не работает */
+.registration-page .woocommerce-form-register .form-row:nth-child(2) {
+    order: -1;
+}
+
+/* 2. Растягивание всех полей на полную ширину контейнера */
+.registration-page .woocommerce-form-register .form-row {
+    width: 100% !important;
+    margin-bottom: 15px;
+}
+
+.registration-page .woocommerce-form-register .form-row input[type="text"],
+.registration-page .woocommerce-form-register .form-row input[type="email"],
+.registration-page .woocommerce-form-register .form-row input[type="password"] {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+/* Убираем возможные float стили только для регистрации */
+.registration-page .woocommerce-form-register .form-row {
+    float: none !important;
+    clear: both;
+}
+
+/* Стили для кнопки регистрации */
+.registration-page .woocommerce-form-register .woocommerce-Button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Дополнительные стили для улучшения внешнего вида */
+.registration-page .woocommerce-form-register {
+    max-width: 100%;
+}
+
+.registration-page .woocommerce-form-register .form-row label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+/* Альтернативные селекторы, если основные не работают */
+/* Используйте эти селекторы, если ваша форма имеет другую структуру */
+
+/* Для специфичных селекторов WordPress/WooCommerce */
+.registration-page .woocommerce .woocommerce-form-register .form-row {
+    width: 100% !important;
+}
+
+.registration-page .woocommerce .woocommerce-form-register .form-row input {
+    width: 100% !important;
+}
+
+/* Если у вас есть обёртка с ID или специфичным классом */
+#registration-form .form-row,
+.custom-registration-form .form-row {
+    width: 100% !important;
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 768px) {
+    .registration-page .woocommerce-form-register .form-row {
+        margin-bottom: 10px;
+    }
+    
+    .registration-page .woocommerce-form-register .form-row input {
+        padding: 12px;
+        font-size: 16px; /* Предотвращает зум на мобильных устройствах */
+    }
+}
+
+/* Дополнительная специфичность для переопределения стилей темы */
+body.registration-page .woocommerce-form-register .form-row {
+    width: 100% !important;
+    float: none !important;
+}
+
+body.registration-page .woocommerce-form-register .form-row input {
+    width: 100% !important;
+}</p>
   </body>
 </html>
